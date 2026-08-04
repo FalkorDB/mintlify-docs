@@ -425,6 +425,25 @@
       "href": "https://app.falkordb.cloud"
     }
   },
+  "seo": {
+    "indexing": "navigable",
+    "metatags": {
+      "canonical": "https://docs.falkordb.cloud",
+      "author": "FalkorDB",
+      "keywords": "FalkorDB, FalkorDB Cloud, graph database, knowledge graph, Cypher, GraphRAG, managed database, REST API",
+      "robots": "index, follow",
+      "googlebot": "index, follow",
+      "language": "en",
+      "category": "Technology",
+      "og:type": "website",
+      "og:site_name": "FalkorDB Cloud Docs",
+      "og:locale": "en_US",
+      "og:url": "https://docs.falkordb.cloud",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@falkordb",
+      "twitter:creator": "@falkordb"
+    }
+  },
   "contextual": {
     "options": [
       "copy",
