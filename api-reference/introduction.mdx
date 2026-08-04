@@ -30,6 +30,16 @@ Cookie: omnistrate_token=<jwt>
 
 Browsers send the cookies automatically when requests include credentials. Server-side and CLI clients must store the `Set-Cookie` values and replay them on every request.
 
+## Account management
+
+Before you can create a deployment instance you need a subscription to a service plan. The [account management](/api-reference/account/subscriptions/list) endpoints let you:
+
+- Discover the available plans with [List service plans](/api-reference/account/service-plans).
+- Subscribe to a plan with [Create subscription](/api-reference/account/subscriptions/create).
+- Share a subscription with teammates using [Invite user](/api-reference/account/access/invite-user) and [Revoke user role](/api-reference/account/access/revoke-user).
+
+Every deployment instance belongs to a subscription. Pass the subscription ID as the `subscriptionId` query parameter on instance requests.
+
 ## Service tiers
 
 The API is organized by service tier and hosting model:
@@ -43,6 +53,18 @@ The API is organized by service tier and hosting model:
 | [Free](/api-reference/free/free/list) | Multi-tenant | Free |
 
 Enterprise BYOA deploys into your own cloud account, so create requests take a `cloud_provider_account_config_id`. Enterprise deploys into a custom network you provide with `custom_network_id`.
+
+## Infrastructure
+
+| Area | Description |
+| --- | --- |
+| [Cloud accounts](/api-reference/cloud-accounts/overview) | Register and bootstrap your own AWS, GCP, Azure, or OCI account for Enterprise BYOA. Produces the `cloud_provider_account_config_id` used at instance creation. |
+| [Custom networks](/api-reference/networking/list) | Reserve CIDR blocks per cloud provider region. Produces the `custom_network_id` used at instance creation and on snapshot restore. |
+| [Snapshots](/api-reference/snapshots/list) | Take, copy, and restore point-in-time snapshots of a deployment instance. |
+
+## Database users
+
+[Database users](/api-reference/database-users/overview) are the credentials your application uses to connect to an instance. They are managed through a **separate FalkorDB API host** at `https://api.falkordb.cloud/v1/customer-ldap` using bearer token authentication rather than the session cookie.
 
 ## Operations
 

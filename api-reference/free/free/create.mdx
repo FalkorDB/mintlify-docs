@@ -39,7 +39,7 @@ Provisions a new Free instance in the requested cloud provider and region. The i
     </ParamField>
 
     <ParamField body="falkordbUser" type="string" default="falkordb" required>
-      Default username for the database.
+      Default username for the database. Set at creation only.
     </ParamField>
 
     <ParamField body="description" type="string" default="Description">
@@ -51,6 +51,14 @@ Provisions a new Free instance in the requested cloud provider and region. The i
     </ParamField>
   </Expandable>
 </ParamField>
+
+## Sizing and tier availability
+
+The Free tier is fixed size and does not expose any sizing parameters.
+
+Only `name`, `description`, `falkordbUser`, and `falkordbPassword` are available on the Free tier. Sizing, TLS, persistence, and the `falkorDB*` tuning parameters are **not** configurable.
+
+See [Instance configuration](/api-reference/schemas#instance-configuration) for the full field reference.
 
 ## Response
 

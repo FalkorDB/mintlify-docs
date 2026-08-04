@@ -46,6 +46,14 @@ Applies configuration changes to a running instance. Only the fields you send ar
   </Expandable>
 </ParamField>
 
+## Sizing and tier availability
+
+The Startup tier does not expose `nodeInstanceType`. Size the database with `memoryRequestsAndLimits` instead, which accepts `1200M` (1 GB, the default) or `2200M` (2 GB).
+
+`nodeInstanceType`, `numReplicas`, `maxMemory`, and `enableEnterpriseModule` are **not** available on the Startup tier.
+
+See [Instance configuration](/api-reference/schemas#instance-configuration) for the full field reference.
+
 ## Response
 
 <ResponseField name="id" type="string">

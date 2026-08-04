@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "FalkorDB Cloud Docs",
+  "name": "FalkorDB Cloud Docs (Beta)",
   "colors": {
     "primary": "#7466FF",
     "light": "#FF804D",
@@ -25,6 +25,11 @@
           "anchor": "GitHub",
           "href": "https://github.com/FalkorDB/FalkorDB",
           "icon": "github"
+        },
+        {
+          "anchor": "Support Portal",
+          "href": "https://support.falkordb.com",
+          "icon": "lifebuoy"
         }
       ]
     },
@@ -49,7 +54,72 @@
           {
             "group": "Authentication",
             "pages": [
-              "api-reference/authentication/signin"
+              "api-reference/authentication/signin",
+              "api-reference/authentication/logout"
+            ]
+          },
+          {
+            "group": "Account management",
+            "pages": [
+              "api-reference/account/service-plans",
+              {
+                "group": "Subscriptions",
+                "pages": [
+                  "api-reference/account/subscriptions/list",
+                  "api-reference/account/subscriptions/create",
+                  "api-reference/account/subscriptions/describe",
+                  "api-reference/account/subscriptions/delete"
+                ]
+              },
+              {
+                "group": "Access control",
+                "pages": [
+                  "api-reference/account/access/list-users",
+                  "api-reference/account/access/invite-user",
+                  "api-reference/account/access/revoke-user"
+                ]
+              },
+              "api-reference/account/user/describe"
+            ]
+          },
+          {
+            "group": "Cloud accounts",
+            "pages": [
+              "api-reference/cloud-accounts/overview",
+              "api-reference/cloud-accounts/create",
+              "api-reference/cloud-accounts/describe",
+              "api-reference/cloud-accounts/connection"
+            ]
+          },
+          {
+            "group": "Custom networks",
+            "pages": [
+              "api-reference/networking/list",
+              "api-reference/networking/create",
+              "api-reference/networking/describe",
+              "api-reference/networking/update",
+              "api-reference/networking/delete"
+            ]
+          },
+          {
+            "group": "Snapshots",
+            "pages": [
+              "api-reference/snapshots/list",
+              "api-reference/snapshots/create",
+              "api-reference/snapshots/describe",
+              "api-reference/snapshots/restore",
+              "api-reference/snapshots/copy",
+              "api-reference/snapshots/delete"
+            ]
+          },
+          {
+            "group": "Database users",
+            "pages": [
+              "api-reference/database-users/overview",
+              "api-reference/database-users/list",
+              "api-reference/database-users/create",
+              "api-reference/database-users/update",
+              "api-reference/database-users/delete"
             ]
           },
           {
@@ -340,7 +410,7 @@
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg",
-    "href": "https://app.falkordb.cloud"
+    "href": "https://docs.falkordb.cloud"
   },
   "navbar": {
     "links": [

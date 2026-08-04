@@ -127,29 +127,58 @@ Every endpoint page documents its own request and response fields. This page col
 
 ## Instance configuration
 
-Create and update requests wrap instance settings in a `requestParams` object. The available settings depend on the service tier and component, and the exact list is documented on each endpoint page. The most common settings are:
+Create and update requests wrap instance settings in a `requestParams` object. The available settings depend on the service tier and component. Each create and update page has a **Sizing and tier availability** section listing the instance types and the fields that tier supports.
 
-| Field | Type | Description |
-| --- | --- | --- |
-| `name` | string | Human-readable name for the instance. |
-| `description` | string | Description of the instance. |
-| `nodeInstanceType` | string | Compute instance type used for each node. |
-| `numReplicas` | number | Number of replicas. Single-Zone, Multi-Zone, and cluster components only. |
-| `maxMemory` | string | Maximum memory for the database. Enterprise tiers only. |
-| `memoryRequestsAndLimits` | string | Memory allocated to the database. Startup tier only. |
-| `falkordbUser` | string | Default database username. |
-| `falkordbPassword` | string | Default database password. Changing it restarts the instance. |
-| `enableTLS` | boolean | Enable TLS for database connections. |
-| `enableEnterpriseModule` | boolean | Enable the FalkorDB enterprise module. Enterprise tiers only. |
-| `AOFPersistenceConfig` | string | Append-only file persistence mode. |
-| `RDBPersistenceConfig` | string | How often the RDB snapshot is written to disk. |
-| `falkorDBCacheSize` | number | Number of cached query executions. |
-| `falkorDBMaxQueuedQueries` | number | Maximum number of queued queries. |
-| `falkorDBNodeCreationBuffer` | number | Node creation buffer size. |
-| `falkorDBQueryMemCapacity` | number | Maximum memory per query, in bytes. |
-| `falkorDBResultSetSize` | number | Maximum number of records returned by a query. |
-| `falkorDBTimeoutDefault` | number | Default query timeout in milliseconds. |
-| `falkorDBTimeoutMax` | number | Maximum query timeout in milliseconds. |
+Fields marked **Create only** are fixed once the instance is deployed and are rejected by [Update instance](/api-reference/enterprise/standalone/update). The remaining fields can be changed at any time.
+
+| Field | Type | Allowed values | Default | Modifiable |
+| --- | --- | --- | --- | --- |
+| `name` | string | Any string | `FalkorDB Instance` | Yes |
+| `description` | string | Any string | `Description` | Yes |
+| `nodeInstanceType` | string | A compute instance type offered by the tier. The Pro tier restricts the list; see the create page for each component | Tier specific | Yes |
+| `numReplicas` | number | `2` | `2` | Create only |
+| `maxMemory` | string | Memory size string, for example `6GB`. Do not exceed the instance type memory | `6GB` | Yes |
+| `memoryRequestsAndLimits` | string | `1200M` (1 GB) or `2200M` (2 GB) | `1GB` | Create only |
+| `falkordbUser` | string | Letters, digits, and underscores | `falkordb` | Create only |
+| `falkordbPassword` | string | Any password | — | Yes, restarts the instance |
+| `enableTLS` | boolean | `true`, `false` | `false` | Create only |
+| `enableEnterpriseModule` | boolean | `true`, `false` | `false` | Create only |
+| `AOFPersistenceConfig` | string | `everysec`, `always` | `everysec` | Create only |
+| `RDBPersistenceConfig` | string | `low`, `medium`, `high` | `low` | Create only |
+| `falkorDBCacheSize` | number | `1`–`256` | `25` | Create only |
+| `falkorDBMaxQueuedQueries` | number | `1`–`512` | `50` | Create only |
+| `falkorDBNodeCreationBuffer` | number | `256`–`32768` | `16384` | Create only |
+| `falkorDBQueryMemCapacity` | number | `5242880`–`21474836480` bytes | `21474836480` | Create only |
+| `falkorDBResultSetSize` | number | `0`–`1000000`, `0` means unlimited | `10000` | Create only |
+| `falkorDBTimeoutDefault` | number | `0`–`45000` ms, `0` disables the timeout | `0` | Create only |
+| `falkorDBTimeoutMax` | number | `0`–`45000` ms, `0` disables the limit | `0` | Create only |
+
+### FalkorDB configuration parameters
+
+The `falkorDB*` fields set FalkorDB configuration parameters on the deployed instance. See the [FalkorDB configuration reference](https://docs.falkordb.com/getting-started/configuration.html) for the full behavior of each parameter.
+
+| Field | FalkorDB parameter |
+| --- | --- |
+| `falkorDBCacheSize` | [`CACHE_SIZE`](https://docs.falkordb.com/getting-started/configuration.html#cache_size) |
+| `falkorDBMaxQueuedQueries` | [`MAX_QUEUED_QUERIES`](https://docs.falkordb.com/getting-started/configuration.html#max_queued_queries) |
+| `falkorDBNodeCreationBuffer` | [`NODE_CREATION_BUFFER`](https://docs.falkordb.com/getting-started/configuration.html#node_creation_buffer) |
+| `falkorDBQueryMemCapacity` | [`QUERY_MEM_CAPACITY`](https://docs.falkordb.com/getting-started/configuration.html#query_mem_capacity) |
+| `falkorDBResultSetSize` | [`RESULTSET_SIZE`](https://docs.falkordb.com/getting-started/configuration.html#resultset_size) |
+| `falkorDBTimeoutDefault` | [`TIMEOUT_DEFAULT`](https://docs.falkordb.com/getting-started/configuration.html#timeout_default) |
+| `falkorDBTimeoutMax` | [`TIMEOUT_MAX`](https://docs.falkordb.com/getting-started/configuration.html#timeout_max) |
+
+### Availability by tier
+
+| Field | Enterprise BYOA | Enterprise | Pro | Startup | Free |
+| --- | --- | --- | --- | --- | --- |
+| `name`, `description`, `falkordbUser`, `falkordbPassword` | Yes | Yes | Yes | Yes | Yes |
+| `nodeInstanceType` | Yes | Yes | Yes | No | No |
+| `enableTLS` | Yes | Yes | Yes | Yes | No |
+| `enableEnterpriseModule` | Yes | Yes | No | No | No |
+| `maxMemory` | Yes | Yes | No | No | No |
+| `memoryRequestsAndLimits` | No | No | No | Yes | No |
+| `numReplicas` | Single-Zone and Multi-Zone | Single-Zone and Multi-Zone | Single-Zone and Multi-Zone | No | No |
+| Persistence and `falkorDB*` tuning fields | Yes | Yes | Yes | Yes | No |
 
 Deployment-model fields are sent at the top level of the request body rather than inside `requestParams`:
 

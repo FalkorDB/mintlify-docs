@@ -46,6 +46,14 @@ Applies configuration changes to a running instance. Only the fields you send ar
   </Expandable>
 </ParamField>
 
+## Sizing and tier availability
+
+The Free tier is fixed size and does not expose any sizing parameters.
+
+Only `name`, `description`, `falkordbUser`, and `falkordbPassword` are available on the Free tier. Sizing, TLS, persistence, and the `falkorDB*` tuning parameters are **not** configurable.
+
+See [Instance configuration](/api-reference/schemas#instance-configuration) for the full field reference.
+
 ## Response
 
 <ResponseField name="id" type="string">
