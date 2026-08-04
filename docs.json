@@ -141,19 +141,7 @@
               },
               {
                 "group": "Grafana",
-                "pages": [
-                  "api-reference/enterprise-byoa/grafana/list",
-                  "api-reference/enterprise-byoa/grafana/create",
-                  "api-reference/enterprise-byoa/grafana/describe",
-                  "api-reference/enterprise-byoa/grafana/update",
-                  "api-reference/enterprise-byoa/grafana/delete",
-                  "api-reference/enterprise-byoa/grafana/backup",
-                  "api-reference/enterprise-byoa/grafana/copy-snapshot",
-                  "api-reference/enterprise-byoa/grafana/failover",
-                  "api-reference/enterprise-byoa/grafana/start",
-                  "api-reference/enterprise-byoa/grafana/stop",
-                  "api-reference/enterprise-byoa/grafana/restart"
-                ]
+                "pages": []
               }
             ]
           },
