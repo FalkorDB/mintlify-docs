@@ -1,47 +1,79 @@
 ---
 title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+description: "Create your first FalkorDB Cloud instance with the API"
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
-
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
+This guide takes you from credentials to a running FalkorDB instance using the API.
 
 ## Prerequisites
 
-Before you begin, you must have:
+Before you begin, you need:
 
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
+- A [FalkorDB Cloud](https://app.falkordb.cloud) account.
+- `curl` and `jq` installed locally.
 
 ## Get started
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+  <Step title="Sign in">
+    Sign in with HTTP Basic authentication. The response sets the `omnistrate_token` session cookie that authorizes every other request, so store it in a cookie jar.
 
     ```bash
-    npm install your-package
+    curl -s -c cookies.txt -X POST \
+      https://api.omnistrate.cloud/2022-09-01-00/resource-instance/user/signin \
+      -u "$FALKORDB_EMAIL:$FALKORDB_PASSWORD"
+    ```
+
+    See [Sign in](/api-reference/authentication/signin) for the full reference. The session lasts 1 hour.
+  </Step>
+  <Step title="Create an instance">
+    Send a create request to the endpoint for your service tier and deployment component, replaying the cookie jar with `-b`. This example creates a Free instance.
+
+    ```bash
+    INSTANCE_ID=$(curl -s -b cookies.txt -X POST \
+      "https://api.omnistrate.cloud/2022-09-01-00/resource-instance/sp-JvkxkPhinN/falkordb/v1/prod/falkordb-free-customer-hosted/falkordb-free-falkordb-customer-hosted-model-omnistrate-multi-tenancy/free" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "cloud_provider": "aws",
+        "region": "us-east-1",
+        "requestParams": {
+          "name": "my-first-graph",
+          "falkordbUser": "falkordb",
+          "falkordbPassword": "'"$FALKORDB_DB_PASSWORD"'"
+        }
+      }' | jq -r .id)
     ```
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
+  <Step title="Wait until it is running">
+    Instances are provisioned asynchronously. Poll the describe endpoint until `status` is `RUNNING`.
 
     ```bash
-    your-cli init
+    curl -s -b cookies.txt \
+      "https://api.omnistrate.cloud/2022-09-01-00/resource-instance/sp-JvkxkPhinN/falkordb/v1/prod/falkordb-free-customer-hosted/falkordb-free-falkordb-customer-hosted-model-omnistrate-multi-tenancy/free/$INSTANCE_ID" \
+      | jq '{status, result_params}'
     ```
+
+    The `result_params` object contains the hostname and port you connect to.
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
+  <Step title="Connect">
+    Use the returned endpoint with any FalkorDB client.
 
     ```bash
-    your-cli start
+    redis-cli -h <hostname> -p <port> --user falkordb --pass "$FALKORDB_DB_PASSWORD" \
+      GRAPH.QUERY social "CREATE (:Person {name: 'Alice'})"
     ```
   </Step>
 </Steps>
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+<Warning>
+  Never hardcode credentials in scripts or commit them to source control. Read them from environment variables or a secret manager, and keep `cookies.txt` out of version control.
+</Warning>
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
+## Next steps
+
+- Browse the [API reference](/api-reference/introduction) for every tier and component.
+- Review the [shared schemas](/api-reference/schemas) for request and response shapes.
+
+<Tip>
+  Need help? Reach out at [contact@falkordb.com](mailto:contact@falkordb.com).
 </Tip>

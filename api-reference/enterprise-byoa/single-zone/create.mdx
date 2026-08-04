@@ -2,19 +2,132 @@
 title: "Create instance"
 sidebarTitle: "Create"
 api: "POST https://api.omnistrate.cloud/2022-09-01-00/resource-instance/sp-JvkxkPhinN/falkordb/v1/prod/falkordb-enterprise-byoa-byoa/falkordb-enterprise-byoa-falkordb-byoa-model-omnistrate-dedicated-tenancy/single-Zone"
-description: "Provision an Enterprise BYOA Single-Zone instance."
+description: "Provision a new Enterprise BYOA Single-Zone instance."
 ---
 
-Provisions a new Enterprise BYOA Single-Zone instance.
+Provisions a new Enterprise BYOA Single-Zone instance in the requested cloud provider and region. The instance is created asynchronously; poll [Describe](/api-reference/enterprise-byoa/single-zone/describe) until `status` is `RUNNING`.
 
 ## Authorization
 
+<ParamField header="Cookie" type="string" required>
+  Session cookie set by [Sign in](/api-reference/authentication/signin): `omnistrate_token=<jwt>`.
+  Browsers send it automatically; other clients must forward it on every request.
+</ParamField>
+
 ## Query parameters
+
+<ParamField query="subscriptionId" type="string">
+  ID of the subscription that owns the instance.
+</ParamField>
 
 ## Body
 
-See [CREATERequestBody (Enterprise BYOA - Multi-Zone / Single-Zone)](/api-reference/schemas#createrequestbody-enterprise-byoa-multi-zone-single-zone).
+<ParamField body="cloud_provider" type="string" required>
+  Cloud provider to provision the instance on, for example `aws` or `gcp`.
+</ParamField>
+
+<ParamField body="region" type="string" required>
+  Region to provision the instance in, for example `us-east-1`.
+</ParamField>
+
+<ParamField body="requestParams" type="object" required>
+  Instance configuration.
+
+  <Expandable title="requestParams properties">
+    <ParamField body="cloud_provider_account_config_id" type="string" required>
+      ID of the cloud provider account configuration that FalkorDB deploys into.
+    </ParamField>
+
+    <ParamField body="enableEnterpriseModule" type="boolean" default={false} required>
+      Enable the FalkorDB enterprise module.
+    </ParamField>
+
+    <ParamField body="enableTLS" type="boolean" default={false} required>
+      Enable TLS for database connections.
+    </ParamField>
+
+    <ParamField body="falkordbPassword" type="string" required>
+      Default password for the database. Updating this value after deployment restarts the instance.
+    </ParamField>
+
+    <ParamField body="falkordbUser" type="string" default="falkordb" required>
+      Default username for the database.
+    </ParamField>
+
+    <ParamField body="nodeInstanceType" type="string" default="e2-custom-4-8192" required>
+      Compute instance type used for each node.
+    </ParamField>
+
+    <ParamField body="AOFPersistenceConfig" type="string" default="everysec">
+      Append-only file persistence mode, for example `everysec`.
+    </ParamField>
+
+    <ParamField body="cloud_provider_native_network_id" type="string">
+      ID of an existing network in your cloud account to attach the instance to.
+    </ParamField>
+
+    <ParamField body="description" type="string" default="FalkorDB Instance">
+      Description of the instance.
+    </ParamField>
+
+    <ParamField body="falkorDBCacheSize" type="number" default={25}>
+      Number of cached query executions.
+    </ParamField>
+
+    <ParamField body="falkorDBMaxQueuedQueries" type="number" default={50}>
+      Maximum number of queries that can be queued.
+    </ParamField>
+
+    <ParamField body="falkorDBNodeCreationBuffer" type="number" default={16384}>
+      Node creation buffer size.
+    </ParamField>
+
+    <ParamField body="falkorDBQueryMemCapacity" type="number" default={21474836480}>
+      Maximum memory a single query may use, in bytes. `0` means unlimited.
+    </ParamField>
+
+    <ParamField body="falkorDBResultSetSize" type="number" default={10000}>
+      Maximum number of records returned by a query.
+    </ParamField>
+
+    <ParamField body="falkorDBTimeoutDefault" type="number" default={0}>
+      Default query timeout in milliseconds. `0` disables the timeout.
+    </ParamField>
+
+    <ParamField body="falkorDBTimeoutMax" type="number" default={0}>
+      Maximum query timeout in milliseconds. `0` disables the limit.
+    </ParamField>
+
+    <ParamField body="maxMemory" type="string" default="6GB">
+      Maximum memory available to the database. Do not exceed the memory of the selected instance type.
+    </ParamField>
+
+    <ParamField body="name" type="string" default="FalkorDB Instance">
+      Human-readable name for the instance.
+    </ParamField>
+
+    <ParamField body="numReplicas" type="number" default={2}>
+      Number of replicas to deploy.
+    </ParamField>
+
+    <ParamField body="RDBPersistenceConfig" type="string" default="low">
+      How often the RDB snapshot is written to disk, for example `low`.
+    </ParamField>
+  </Expandable>
+</ParamField>
 
 ## Response
 
-See [CREATEResponseBody](/api-reference/schemas#createresponsebody).
+<ResponseField name="id" type="string">
+  ID of the resource instance.
+</ResponseField>
+
+```json 202 Accepted
+{
+  "id": "instance-abc123"
+}
+```
+
+## Errors
+
+See [Error](/api-reference/schemas#error) for the shared error response shape.

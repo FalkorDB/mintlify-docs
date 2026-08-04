@@ -1,20 +1,40 @@
 ---
-title: "Introduction"
-description: "Welcome to your project"
+title: "FalkorDB Cloud"
+description: "Provision and manage FalkorDB instances with the FalkorDB Cloud API"
 ---
 
-Write a short description of your product here. What it does, who it's for, and what they can accomplish with it.
+FalkorDB Cloud is the managed service for FalkorDB, the ultra-low-latency graph database. Use the FalkorDB Cloud API to provision instances, change their configuration, take backups, and manage their lifecycle programmatically.
 
-<Tip>
-  Ready to make this your own? Start by editing this page. Update your `docs.json` file to customize your site. Then fill out the [Quickstart](/quickstart) page.
-</Tip>
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Sign in, create your first instance, and connect to it.
+  </Card>
+  <Card title="API reference" icon="code" href="/api-reference/introduction">
+    Every endpoint, grouped by service tier and deployment component.
+  </Card>
+  <Card title="Dashboard" icon="grid-2" href="https://app.falkordb.cloud">
+    Manage the same resources from the FalkorDB Cloud console.
+  </Card>
+  <Card title="Support" icon="life-ring" href="mailto:contact@falkordb.com">
+    Get help from the FalkorDB team.
+  </Card>
+</CardGroup>
 
-<Card title="Quickstart" icon="rocket" href="/quickstart">
-  This card links to the quickstart page in your project.
-</Card>
-<Card title="Components" icon="puzzle-piece" href="https://mintlify.com/docs/components">
-  Add cards, callouts, steps, tabs, and more to design and structure your pages.
-</Card>
-<Card title="Settings" icon="gear" href="https://mintlify.com/docs/organize/settings">
-  Set your site name, branding, and navigation in the `docs.json` file.
-</Card>
+## Service tiers
+
+| Tier | Tenancy | Hosting |
+| --- | --- | --- |
+| Free | Multi-tenant | FalkorDB-hosted |
+| Startup | Multi-tenant | FalkorDB-hosted |
+| Pro | Dedicated | FalkorDB-hosted |
+| Enterprise | Dedicated | FalkorDB-hosted in your dedicated network |
+| Enterprise BYOA | Dedicated | Your own cloud account |
+
+## Deployment components
+
+Each tier exposes the deployment components it supports:
+
+- **Standalone** — a single node.
+- **Single-Zone** — a primary with replicas in one availability zone.
+- **Multi-Zone** — a primary with replicas spread across availability zones.
+- **Cluster (Single-Zone)** and **Cluster (Multi-Zone)** — sharded deployments for larger graphs.

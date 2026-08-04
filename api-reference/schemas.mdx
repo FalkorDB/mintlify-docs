@@ -1,173 +1,201 @@
 ---
 title: "Schemas"
-description: "Request and response schemas shared across the FalkorDB API."
+description: "Shared request and response shapes used across the FalkorDB Cloud API."
 ---
 
-This page documents the request and response schemas used across endpoints. Endpoint pages link here for full field definitions.
+Every endpoint page documents its own request and response fields. This page collects the shapes that are shared across endpoints.
 
-## Common query parameter
+## Common parameters
 
-<ParamField query="subscriptionId" type="string">
-  ID of the subscription. Optional on every endpoint.
+<ParamField header="Cookie" type="string" required>
+  Session cookie set by [Sign in](/api-reference/authentication/signin): `omnistrate_token=<jwt>`.
 </ParamField>
-
-## Common path parameter
 
 <ParamField path="id" type="string" required>
-  ID of the resource instance.
+  ID of the resource instance. Present on every endpoint that targets a single instance.
 </ParamField>
 
-## LISTResponseBody
+<ParamField query="subscriptionId" type="string">
+  ID of the subscription that owns the instance. Optional on every endpoint.
+</ParamField>
+
+## List response
 
 <ResponseField name="ids" type="string[]">
   IDs of the resource instances.
 </ResponseField>
 
-```json
-{ "ids": ["instance-abc", "instance-def"] }
+```json 200 OK
+{
+  "ids": ["instance-abc123", "instance-def456"]
+}
 ```
 
-## CREATEResponseBody
+## Create response
 
 <ResponseField name="id" type="string">
-  ID of the created resource.
+  ID of the created resource instance.
 </ResponseField>
 
-```json
-{ "id": "instance-abc" }
+```json 202 Accepted
+{
+  "id": "instance-abc123"
+}
 ```
 
-## DESCRIBEResponseBody
+## Describe response
 
-Returned for Enterprise BYOA, Pro, Startup, and Free tiers.
-
-       
-
-## DESCRIBEResponseBody2
-
-Returned for Enterprise Customer Hosted endpoints. Same fields as `DESCRIBEResponseBody` plus:
-
-<ResponseField name="custom_network" type="string">
-  Custom network the resource is provisioned in.
+<ResponseField name="id" type="string">
+  ID of the resource instance.
 </ResponseField>
 
-## CREATERequestBody (Enterprise BYOA - Standalone / Cluster)
+<ResponseField name="status" type="string">
+  Lifecycle status of the instance, for example `RUNNING` or `STOPPED`.
+</ResponseField>
 
- 
+<ResponseField name="cloud_provider" type="string">
+  Cloud provider the instance runs on.
+</ResponseField>
 
-<ParamField body="requestParams" type="object" required>
-  <Expandable title="properties">
-                      
-  </Expandable>
+<ResponseField name="region" type="string">
+  Region the instance runs in.
+</ResponseField>
+
+<ResponseField name="network_type" type="string">
+  Network type of the instance.
+</ResponseField>
+
+<ResponseField name="custom_network" type="string">
+  Custom network the instance is provisioned in. Returned only by Enterprise endpoints.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  Time the instance was created.
+</ResponseField>
+
+<ResponseField name="last_modified" type="string">
+  Time the instance was last modified.
+</ResponseField>
+
+<ResponseField name="result_params" type="object">
+  Deployment outputs, including connection endpoints and credentials.
+</ResponseField>
+
+```json 200 OK
+{
+  "id": "instance-abc123",
+  "status": "RUNNING",
+  "cloud_provider": "aws",
+  "region": "us-east-1",
+  "network_type": "PUBLIC",
+  "created_at": "2026-01-15T10:30:00Z",
+  "last_modified": "2026-01-20T08:12:00Z",
+  "result_params": {
+    "falkordbHostname": "abc123.instances.omnistrate.cloud",
+    "falkordbPort": 6379
+  }
+}
+```
+
+## Copy snapshot
+
+<ParamField body="target_region" type="string" required>
+  Region to copy the snapshot to.
 </ParamField>
 
-## CREATERequestBody (Enterprise BYOA - Multi-Zone / Single-Zone)
-
-Same as CREATERequestBody (Standalone/Cluster) with the addition of:
-
-<ParamField body="requestParams.numReplicas" default={2} type="number">
-  Number of replicas.
+<ParamField body="source_snapshot_id" type="string">
+  ID of the snapshot to copy from.
 </ParamField>
 
-## CREATERequestBody (Enterprise BYOA - Grafana)
+<ResponseField name="snapshot_id" type="string">
+  ID of the snapshot that was created.
+</ResponseField>
 
- 
+## Failover
 
-<ParamField body="requestParams" type="object" required>
-  <Expandable title="properties">
-                
-  </Expandable>
+<ParamField body="failed_replica_id" type="string" required>
+  ID of the failed replica to fail over from.
 </ParamField>
 
-## CREATERequestBody (Enterprise Customer Hosted)
-
-Same as Enterprise BYOA variants except:
-
-- Adds `custom_network_id` (string) at the top level. Custom network to provision the resource in.
-- Removes `cloud_provider_account_config_id` and `cloud_provider_native_network_id` from `requestParams`.
-
-Grafana variant adds `custom_network_id` and drops the two BYOA account fields as well.
-
-## CREATERequestBody (Pro Customer Hosted)
-
-Same as Enterprise Customer Hosted CREATE except:
-
-- No `custom_network_id`.
-- No `enableEnterpriseModule` in `requestParams`.
-- No `maxMemory` in `requestParams`.
-
-## CREATERequestBody (Startup Customer Hosted - Standalone)
-
- 
-
-<ParamField body="requestParams" type="object" required>
-  <Expandable title="properties">
-                  
-  </Expandable>
+<ParamField body="failed_replica_action" type="string" required>
+  Action to take on the failed replica.
 </ParamField>
 
-## CREATERequestBody (Free Customer Hosted)
+## Lifecycle operations
 
- 
+`DELETE`, `UPDATE`, `BACKUP`, `FAILOVER`, `START`, `STOP`, and `RESTART` return `202 Accepted` with an empty body. The operation runs asynchronously; poll the Describe endpoint until `status` reflects the new state.
 
-<ParamField body="requestParams" type="object" required>
-  <Expandable title="properties">
-       
-  </Expandable>
-</ParamField>
+## Instance configuration
 
-## UPDATERequestBody (Enterprise - all components except Grafana)
+Create and update requests wrap instance settings in a `requestParams` object. The available settings depend on the service tier and component, and the exact list is documented on each endpoint page. The most common settings are:
 
-<ParamField body="requestParams" type="object" required>
-  <Expandable title="properties">
-        
-  </Expandable>
-</ParamField>
+| Field | Type | Description |
+| --- | --- | --- |
+| `name` | string | Human-readable name for the instance. |
+| `description` | string | Description of the instance. |
+| `nodeInstanceType` | string | Compute instance type used for each node. |
+| `numReplicas` | number | Number of replicas. Single-Zone, Multi-Zone, and cluster components only. |
+| `maxMemory` | string | Maximum memory for the database. Enterprise tiers only. |
+| `memoryRequestsAndLimits` | string | Memory allocated to the database. Startup tier only. |
+| `falkordbUser` | string | Default database username. |
+| `falkordbPassword` | string | Default database password. Changing it restarts the instance. |
+| `enableTLS` | boolean | Enable TLS for database connections. |
+| `enableEnterpriseModule` | boolean | Enable the FalkorDB enterprise module. Enterprise tiers only. |
+| `AOFPersistenceConfig` | string | Append-only file persistence mode. |
+| `RDBPersistenceConfig` | string | How often the RDB snapshot is written to disk. |
+| `falkorDBCacheSize` | number | Number of cached query executions. |
+| `falkorDBMaxQueuedQueries` | number | Maximum number of queued queries. |
+| `falkorDBNodeCreationBuffer` | number | Node creation buffer size. |
+| `falkorDBQueryMemCapacity` | number | Maximum memory per query, in bytes. |
+| `falkorDBResultSetSize` | number | Maximum number of records returned by a query. |
+| `falkorDBTimeoutDefault` | number | Default query timeout in milliseconds. |
+| `falkorDBTimeoutMax` | number | Maximum query timeout in milliseconds. |
 
-## UPDATERequestBody (Enterprise - Grafana)
+Deployment-model fields are sent at the top level of the request body rather than inside `requestParams`:
 
-<ParamField body="requestParams" type="object" required>
-  <Expandable title="properties">
-              
-  </Expandable>
-</ParamField>
+| Field | Tiers | Description |
+| --- | --- | --- |
+| `cloud_provider` | All | Cloud provider to provision the instance on. |
+| `region` | All | Region to provision the instance in. |
+| `custom_network_id` | Enterprise | Custom network to provision the instance in. |
 
-## UPDATERequestBody (Free and Startup)
-
-<ParamField body="requestParams" type="object" required>
-  <Expandable title="properties">
-      
-  </Expandable>
-</ParamField>
-
-## UPDATERequestBody (Pro - Cluster (Multi-Zone))
-
-<ParamField body="requestParams" type="object" required>
-  <Expandable title="properties">
-      
-  </Expandable>
-</ParamField>
-
-## UPDATERequestBody (Pro - Standalone / Single-Zone / Multi-Zone)
-
-<ParamField body="requestParams" type="object" required>
-  <Expandable title="properties">
-       
-  </Expandable>
-</ParamField>
-
-## COPYSNAPSHOTRequestBody
-
- 
-
-## COPYSNAPSHOTResponseBody
-
-## FAILOVERRequestBody
-
- 
+Enterprise BYOA adds two fields inside `requestParams`: `cloud_provider_account_config_id`, the cloud provider account configuration to deploy into, and `cloud_provider_native_network_id`, an existing network in your account to attach to.
 
 ## Error
 
-Error responses (`application/vnd.goa.error`):
+Error responses use the `application/vnd.goa.error` content type.
 
-     
+<ResponseField name="name" type="string" required>
+  Name of this class of errors, for example `bad_request`.
+</ResponseField>
+
+<ResponseField name="id" type="string" required>
+  Unique identifier for this particular occurrence of the problem.
+</ResponseField>
+
+<ResponseField name="message" type="string" required>
+  Human-readable explanation specific to this occurrence of the problem.
+</ResponseField>
+
+<ResponseField name="temporary" type="boolean" required>
+  Whether the error is temporary and the request can be retried.
+</ResponseField>
+
+<ResponseField name="timeout" type="boolean" required>
+  Whether the error was caused by a timeout.
+</ResponseField>
+
+<ResponseField name="fault" type="boolean" required>
+  Whether the error is a server-side fault.
+</ResponseField>
+
+```json 400 Bad Request
+{
+  "name": "bad_request",
+  "id": "3F1FKVRR",
+  "message": "parameter 'p' must be an integer",
+  "temporary": false,
+  "timeout": false,
+  "fault": false
+}
+```

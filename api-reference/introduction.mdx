@@ -1,9 +1,9 @@
 ---
 title: "Introduction"
-description: "Overview of the FalkorDB API"
+description: "Overview of the FalkorDB Cloud API"
 ---
 
-The FalkorDB API lets you provision and manage FalkorDB resource instances across service tiers and deployment models on Omnistrate.
+The FalkorDB Cloud API lets you provision and manage FalkorDB instances across service tiers and deployment models.
 
 ## Base URL
 
@@ -11,38 +11,61 @@ The FalkorDB API lets you provision and manage FalkorDB resource instances acros
 https://api.omnistrate.cloud
 ```
 
+Every resource path is prefixed with `/2022-09-01-00/resource-instance/sp-JvkxkPhinN/falkordb/v1/prod/`, followed by the service tier, the deployment model, and the component.
+
 ## Authentication
 
-Most endpoints require a JWT bearer token in the `Authorization` header. Obtain a token using the [Signin](/api-reference/user-api/signin-user-api) endpoint with basic authentication.
+All endpoints except sign-in are authenticated with a session cookie.
 
 ```http
-Authorization: Bearer <token>
+Cookie: omnistrate_token=<jwt>
 ```
+
+[Sign in](/api-reference/authentication/signin) with HTTP Basic authentication using your FalkorDB Cloud credentials. The response sets two `HttpOnly` cookies scoped to `.falkordb.cloud`:
+
+| Cookie | Lifetime | Purpose |
+| --- | --- | --- |
+| `omnistrate_token` | 1 hour | Authorizes API requests. |
+| `omnistrate_refresh_token` | 24 hours | Obtains a new session token. |
+
+Browsers send the cookies automatically when requests include credentials. Server-side and CLI clients must store the `Set-Cookie` values and replay them on every request.
 
 ## Service tiers
 
 The API is organized by service tier and hosting model:
 
-- **Enterprise BYOA** (Bring Your Own Account) - dedicated tenancy
-- **Enterprise** - dedicated tenancy
-- **Pro** - dedicated tenancy
-- **Startup** - multi-tenancy
-- **Free** - multi-tenancy
-
-Each tier exposes operations for the deployment components it supports (Standalone, Single-Zone, Multi-Zone, Cluster-Single-Zone, Cluster-Multi-Zone, Grafana).
-
-## Common operations
-
-| Operation | Method | Description |
+| Tier | Tenancy | Components |
 | --- | --- | --- |
-| LIST | `GET` | List instances |
-| CREATE | `POST` | Create an instance |
-| DESCRIBE | `GET /{id}` | Get an instance |
-| UPDATE | `PUT /{id}` | Update an instance |
-| DELETE | `DELETE /{id}` | Delete an instance |
-| BACKUP | `POST /{id}/backup` | Trigger a backup |
-| COPY\_SNAPSHOT | `POST /{id}/copy-snapshot` | Copy a snapshot to another region |
-| FAILOVER | `POST /{id}/failover` | Failover a replica |
-| START | `POST /{id}/start` | Start an instance |
-| STOP | `POST /{id}/stop` | Stop an instance |
-| RESTART | `POST /{id}/restart` | Restart an instance |
+| [Enterprise BYOA](/api-reference/enterprise-byoa/standalone/list) | Dedicated | Standalone, Single-Zone, Multi-Zone, Cluster (Single-Zone), Cluster (Multi-Zone) |
+| [Enterprise](/api-reference/enterprise/standalone/list) | Dedicated | Standalone, Single-Zone, Multi-Zone, Cluster (Single-Zone), Cluster (Multi-Zone) |
+| [Pro](/api-reference/pro/standalone/list) | Dedicated | Standalone, Single-Zone, Multi-Zone, Cluster (Multi-Zone) |
+| [Startup](/api-reference/startup/standalone/list) | Multi-tenant | Standalone |
+| [Free](/api-reference/free/free/list) | Multi-tenant | Free |
+
+Enterprise BYOA deploys into your own cloud account, so create requests take a `cloud_provider_account_config_id`. Enterprise deploys into a custom network you provide with `custom_network_id`.
+
+## Operations
+
+Every component supports the same set of operations.
+
+| Operation | Method | Path |
+| --- | --- | --- |
+| List | `GET` | `/{component}` |
+| Create | `POST` | `/{component}` |
+| Describe | `GET` | `/{component}/{id}` |
+| Update | `PUT` | `/{component}/{id}` |
+| Delete | `DELETE` | `/{component}/{id}` |
+| Backup | `POST` | `/{component}/{id}/backup` |
+| Copy snapshot | `POST` | `/{component}/{id}/copy-snapshot` |
+| Failover | `POST` | `/{component}/{id}/failover` |
+| Start | `POST` | `/{component}/{id}/start` |
+| Stop | `POST` | `/{component}/{id}/stop` |
+| Restart | `POST` | `/{component}/{id}/restart` |
+
+## Asynchronous behavior
+
+Create and lifecycle operations return `202 Accepted` and complete in the background. Poll the Describe endpoint until `status` reflects the state you expect.
+
+## Errors
+
+All endpoints return errors with the `application/vnd.goa.error` content type. See [Error](/api-reference/schemas#error) for the shape.

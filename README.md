@@ -1,16 +1,16 @@
-# Mintlify Starter Kit
+# FalkorDB Cloud Docs
 
-Use the starter kit to get your docs deployed and ready to customize.
+Documentation for the FalkorDB Cloud API, built with [Mintlify](https://mintlify.com).
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## Regenerating the API reference
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+Every page under `api-reference/` (except `introduction.mdx`, `schemas.mdx`, and `authentication/`) is generated from the Omnistrate OpenAPI spec. When the spec changes, re-run:
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+```bash
+python3 scripts/generate_api_pages.py path/to/openapi.json
+```
+
+The script rewrites the endpoint pages and the `API Reference` tab in `docs.json`. Edit `scripts/generate_api_pages.py` rather than the generated pages, otherwise your changes are overwritten on the next run.
 
 ## AI-assisted writing
 

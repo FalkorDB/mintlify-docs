@@ -9,26 +9,22 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
-      {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
-        ]
-      }
-    ],
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
+          "anchor": "FalkorDB Docs",
+          "href": "https://docs.falkordb.com",
           "icon": "book-open-cover"
         },
         {
           "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
+          "href": "https://www.falkordb.com/blog/",
           "icon": "newspaper"
+        },
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/FalkorDB/FalkorDB",
+          "icon": "github"
         }
       ]
     },
@@ -138,22 +134,201 @@
                   "api-reference/enterprise-byoa/single-zone/stop",
                   "api-reference/enterprise-byoa/single-zone/restart"
                 ]
-              },
-              {
-                "group": "Grafana",
-                "pages": []
               }
             ]
           },
           {
-            "group": "Enterprise Customer Hosted",
+            "group": "Enterprise",
             "pages": [
               {
                 "group": "Standalone",
                 "pages": [
-                  "api-reference/enterprise-customer-hosted/standalone/list",
-                  "api-reference/enterprise-customer-hosted/standalone/create",
-                  "api-reference/enterprise-customer-hosted/standalone/describe"
+                  "api-reference/enterprise/standalone/list",
+                  "api-reference/enterprise/standalone/create",
+                  "api-reference/enterprise/standalone/describe",
+                  "api-reference/enterprise/standalone/update",
+                  "api-reference/enterprise/standalone/delete",
+                  "api-reference/enterprise/standalone/backup",
+                  "api-reference/enterprise/standalone/copy-snapshot",
+                  "api-reference/enterprise/standalone/failover",
+                  "api-reference/enterprise/standalone/start",
+                  "api-reference/enterprise/standalone/stop",
+                  "api-reference/enterprise/standalone/restart"
+                ]
+              },
+              {
+                "group": "Cluster (Multi-Zone)",
+                "pages": [
+                  "api-reference/enterprise/cluster-multi-zone/list",
+                  "api-reference/enterprise/cluster-multi-zone/create",
+                  "api-reference/enterprise/cluster-multi-zone/describe",
+                  "api-reference/enterprise/cluster-multi-zone/update",
+                  "api-reference/enterprise/cluster-multi-zone/delete",
+                  "api-reference/enterprise/cluster-multi-zone/backup",
+                  "api-reference/enterprise/cluster-multi-zone/copy-snapshot",
+                  "api-reference/enterprise/cluster-multi-zone/failover",
+                  "api-reference/enterprise/cluster-multi-zone/start",
+                  "api-reference/enterprise/cluster-multi-zone/stop",
+                  "api-reference/enterprise/cluster-multi-zone/restart"
+                ]
+              },
+              {
+                "group": "Cluster (Single-Zone)",
+                "pages": [
+                  "api-reference/enterprise/cluster-single-zone/list",
+                  "api-reference/enterprise/cluster-single-zone/create",
+                  "api-reference/enterprise/cluster-single-zone/describe",
+                  "api-reference/enterprise/cluster-single-zone/update",
+                  "api-reference/enterprise/cluster-single-zone/delete",
+                  "api-reference/enterprise/cluster-single-zone/backup",
+                  "api-reference/enterprise/cluster-single-zone/copy-snapshot",
+                  "api-reference/enterprise/cluster-single-zone/failover",
+                  "api-reference/enterprise/cluster-single-zone/start",
+                  "api-reference/enterprise/cluster-single-zone/stop",
+                  "api-reference/enterprise/cluster-single-zone/restart"
+                ]
+              },
+              {
+                "group": "Multi-Zone",
+                "pages": [
+                  "api-reference/enterprise/multi-zone/list",
+                  "api-reference/enterprise/multi-zone/create",
+                  "api-reference/enterprise/multi-zone/describe",
+                  "api-reference/enterprise/multi-zone/update",
+                  "api-reference/enterprise/multi-zone/delete",
+                  "api-reference/enterprise/multi-zone/backup",
+                  "api-reference/enterprise/multi-zone/copy-snapshot",
+                  "api-reference/enterprise/multi-zone/failover",
+                  "api-reference/enterprise/multi-zone/start",
+                  "api-reference/enterprise/multi-zone/stop",
+                  "api-reference/enterprise/multi-zone/restart"
+                ]
+              },
+              {
+                "group": "Single-Zone",
+                "pages": [
+                  "api-reference/enterprise/single-zone/list",
+                  "api-reference/enterprise/single-zone/create",
+                  "api-reference/enterprise/single-zone/describe",
+                  "api-reference/enterprise/single-zone/update",
+                  "api-reference/enterprise/single-zone/delete",
+                  "api-reference/enterprise/single-zone/backup",
+                  "api-reference/enterprise/single-zone/copy-snapshot",
+                  "api-reference/enterprise/single-zone/failover",
+                  "api-reference/enterprise/single-zone/start",
+                  "api-reference/enterprise/single-zone/stop",
+                  "api-reference/enterprise/single-zone/restart"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Pro",
+            "pages": [
+              {
+                "group": "Standalone",
+                "pages": [
+                  "api-reference/pro/standalone/list",
+                  "api-reference/pro/standalone/create",
+                  "api-reference/pro/standalone/describe",
+                  "api-reference/pro/standalone/update",
+                  "api-reference/pro/standalone/delete",
+                  "api-reference/pro/standalone/backup",
+                  "api-reference/pro/standalone/copy-snapshot",
+                  "api-reference/pro/standalone/failover",
+                  "api-reference/pro/standalone/start",
+                  "api-reference/pro/standalone/stop",
+                  "api-reference/pro/standalone/restart"
+                ]
+              },
+              {
+                "group": "Cluster (Multi-Zone)",
+                "pages": [
+                  "api-reference/pro/cluster-multi-zone/list",
+                  "api-reference/pro/cluster-multi-zone/create",
+                  "api-reference/pro/cluster-multi-zone/describe",
+                  "api-reference/pro/cluster-multi-zone/update",
+                  "api-reference/pro/cluster-multi-zone/delete",
+                  "api-reference/pro/cluster-multi-zone/backup",
+                  "api-reference/pro/cluster-multi-zone/copy-snapshot",
+                  "api-reference/pro/cluster-multi-zone/failover",
+                  "api-reference/pro/cluster-multi-zone/start",
+                  "api-reference/pro/cluster-multi-zone/stop",
+                  "api-reference/pro/cluster-multi-zone/restart"
+                ]
+              },
+              {
+                "group": "Multi-Zone",
+                "pages": [
+                  "api-reference/pro/multi-zone/list",
+                  "api-reference/pro/multi-zone/create",
+                  "api-reference/pro/multi-zone/describe",
+                  "api-reference/pro/multi-zone/update",
+                  "api-reference/pro/multi-zone/delete",
+                  "api-reference/pro/multi-zone/backup",
+                  "api-reference/pro/multi-zone/copy-snapshot",
+                  "api-reference/pro/multi-zone/failover",
+                  "api-reference/pro/multi-zone/start",
+                  "api-reference/pro/multi-zone/stop",
+                  "api-reference/pro/multi-zone/restart"
+                ]
+              },
+              {
+                "group": "Single-Zone",
+                "pages": [
+                  "api-reference/pro/single-zone/list",
+                  "api-reference/pro/single-zone/create",
+                  "api-reference/pro/single-zone/describe",
+                  "api-reference/pro/single-zone/update",
+                  "api-reference/pro/single-zone/delete",
+                  "api-reference/pro/single-zone/backup",
+                  "api-reference/pro/single-zone/copy-snapshot",
+                  "api-reference/pro/single-zone/failover",
+                  "api-reference/pro/single-zone/start",
+                  "api-reference/pro/single-zone/stop",
+                  "api-reference/pro/single-zone/restart"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Startup",
+            "pages": [
+              {
+                "group": "Standalone",
+                "pages": [
+                  "api-reference/startup/standalone/list",
+                  "api-reference/startup/standalone/create",
+                  "api-reference/startup/standalone/describe",
+                  "api-reference/startup/standalone/update",
+                  "api-reference/startup/standalone/delete",
+                  "api-reference/startup/standalone/backup",
+                  "api-reference/startup/standalone/copy-snapshot",
+                  "api-reference/startup/standalone/failover",
+                  "api-reference/startup/standalone/start",
+                  "api-reference/startup/standalone/stop",
+                  "api-reference/startup/standalone/restart"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Free",
+            "pages": [
+              {
+                "group": "Free",
+                "pages": [
+                  "api-reference/free/free/list",
+                  "api-reference/free/free/create",
+                  "api-reference/free/free/describe",
+                  "api-reference/free/free/update",
+                  "api-reference/free/free/delete",
+                  "api-reference/free/free/backup",
+                  "api-reference/free/free/copy-snapshot",
+                  "api-reference/free/free/failover",
+                  "api-reference/free/free/start",
+                  "api-reference/free/free/stop",
+                  "api-reference/free/free/restart"
                 ]
               }
             ]
@@ -177,7 +352,7 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "href": "https://app.falkordb.cloud"
     }
   },
   "contextual": {
