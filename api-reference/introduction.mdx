@@ -1,0 +1,48 @@
+---
+title: "Introduction"
+description: "Overview of the FalkorDB API"
+---
+
+The FalkorDB API lets you provision and manage FalkorDB resource instances across service tiers and deployment models on Omnistrate.
+
+## Base URL
+
+```text
+https://api.omnistrate.cloud
+```
+
+## Authentication
+
+Most endpoints require a JWT bearer token in the `Authorization` header. Obtain a token using the [Signin](/api-reference/user-api/signin-user-api) endpoint with basic authentication.
+
+```http
+Authorization: Bearer <token>
+```
+
+## Service tiers
+
+The API is organized by service tier and hosting model:
+
+- **Enterprise BYOA** (Bring Your Own Account) - dedicated tenancy
+- **Enterprise** - dedicated tenancy
+- **Pro** - dedicated tenancy
+- **Startup** - multi-tenancy
+- **Free** - multi-tenancy
+
+Each tier exposes operations for the deployment components it supports (Standalone, Single-Zone, Multi-Zone, Cluster-Single-Zone, Cluster-Multi-Zone, Grafana).
+
+## Common operations
+
+| Operation | Method | Description |
+| --- | --- | --- |
+| LIST | `GET` | List instances |
+| CREATE | `POST` | Create an instance |
+| DESCRIBE | `GET /{id}` | Get an instance |
+| UPDATE | `PUT /{id}` | Update an instance |
+| DELETE | `DELETE /{id}` | Delete an instance |
+| BACKUP | `POST /{id}/backup` | Trigger a backup |
+| COPY\_SNAPSHOT | `POST /{id}/copy-snapshot` | Copy a snapshot to another region |
+| FAILOVER | `POST /{id}/failover` | Failover a replica |
+| START | `POST /{id}/start` | Start an instance |
+| STOP | `POST /{id}/stop` | Stop an instance |
+| RESTART | `POST /{id}/restart` | Restart an instance |

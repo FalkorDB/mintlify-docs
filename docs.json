@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "FalkorDB Cloud Docs",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#7466FF",
+    "light": "#FF804D",
+    "dark": "#191919"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -31,17 +31,159 @@
           "icon": "newspaper"
         }
       ]
-    }
+    },
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "index",
+              "quickstart"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "pages": [
+          "api-reference/introduction",
+          "api-reference/schemas",
+          {
+            "group": "Authentication",
+            "pages": [
+              "api-reference/authentication/signin"
+            ]
+          },
+          {
+            "group": "Enterprise BYOA",
+            "pages": [
+              {
+                "group": "Standalone",
+                "pages": [
+                  "api-reference/enterprise-byoa/standalone/list",
+                  "api-reference/enterprise-byoa/standalone/create",
+                  "api-reference/enterprise-byoa/standalone/describe",
+                  "api-reference/enterprise-byoa/standalone/update",
+                  "api-reference/enterprise-byoa/standalone/delete",
+                  "api-reference/enterprise-byoa/standalone/backup",
+                  "api-reference/enterprise-byoa/standalone/copy-snapshot",
+                  "api-reference/enterprise-byoa/standalone/failover",
+                  "api-reference/enterprise-byoa/standalone/start",
+                  "api-reference/enterprise-byoa/standalone/stop",
+                  "api-reference/enterprise-byoa/standalone/restart"
+                ]
+              },
+              {
+                "group": "Cluster (Multi-Zone)",
+                "pages": [
+                  "api-reference/enterprise-byoa/cluster-multi-zone/list",
+                  "api-reference/enterprise-byoa/cluster-multi-zone/create",
+                  "api-reference/enterprise-byoa/cluster-multi-zone/describe",
+                  "api-reference/enterprise-byoa/cluster-multi-zone/update",
+                  "api-reference/enterprise-byoa/cluster-multi-zone/delete",
+                  "api-reference/enterprise-byoa/cluster-multi-zone/backup",
+                  "api-reference/enterprise-byoa/cluster-multi-zone/copy-snapshot",
+                  "api-reference/enterprise-byoa/cluster-multi-zone/failover",
+                  "api-reference/enterprise-byoa/cluster-multi-zone/start",
+                  "api-reference/enterprise-byoa/cluster-multi-zone/stop",
+                  "api-reference/enterprise-byoa/cluster-multi-zone/restart"
+                ]
+              },
+              {
+                "group": "Cluster (Single-Zone)",
+                "pages": [
+                  "api-reference/enterprise-byoa/cluster-single-zone/list",
+                  "api-reference/enterprise-byoa/cluster-single-zone/create",
+                  "api-reference/enterprise-byoa/cluster-single-zone/describe",
+                  "api-reference/enterprise-byoa/cluster-single-zone/update",
+                  "api-reference/enterprise-byoa/cluster-single-zone/delete",
+                  "api-reference/enterprise-byoa/cluster-single-zone/backup",
+                  "api-reference/enterprise-byoa/cluster-single-zone/copy-snapshot",
+                  "api-reference/enterprise-byoa/cluster-single-zone/failover",
+                  "api-reference/enterprise-byoa/cluster-single-zone/start",
+                  "api-reference/enterprise-byoa/cluster-single-zone/stop",
+                  "api-reference/enterprise-byoa/cluster-single-zone/restart"
+                ]
+              },
+              {
+                "group": "Multi-Zone",
+                "pages": [
+                  "api-reference/enterprise-byoa/multi-zone/list",
+                  "api-reference/enterprise-byoa/multi-zone/create",
+                  "api-reference/enterprise-byoa/multi-zone/describe",
+                  "api-reference/enterprise-byoa/multi-zone/update",
+                  "api-reference/enterprise-byoa/multi-zone/delete",
+                  "api-reference/enterprise-byoa/multi-zone/backup",
+                  "api-reference/enterprise-byoa/multi-zone/copy-snapshot",
+                  "api-reference/enterprise-byoa/multi-zone/failover",
+                  "api-reference/enterprise-byoa/multi-zone/start",
+                  "api-reference/enterprise-byoa/multi-zone/stop",
+                  "api-reference/enterprise-byoa/multi-zone/restart"
+                ]
+              },
+              {
+                "group": "Single-Zone",
+                "pages": [
+                  "api-reference/enterprise-byoa/single-zone/list",
+                  "api-reference/enterprise-byoa/single-zone/create",
+                  "api-reference/enterprise-byoa/single-zone/describe",
+                  "api-reference/enterprise-byoa/single-zone/update",
+                  "api-reference/enterprise-byoa/single-zone/delete",
+                  "api-reference/enterprise-byoa/single-zone/backup",
+                  "api-reference/enterprise-byoa/single-zone/copy-snapshot",
+                  "api-reference/enterprise-byoa/single-zone/failover",
+                  "api-reference/enterprise-byoa/single-zone/start",
+                  "api-reference/enterprise-byoa/single-zone/stop",
+                  "api-reference/enterprise-byoa/single-zone/restart"
+                ]
+              },
+              {
+                "group": "Grafana",
+                "pages": [
+                  "api-reference/enterprise-byoa/grafana/list",
+                  "api-reference/enterprise-byoa/grafana/create",
+                  "api-reference/enterprise-byoa/grafana/describe",
+                  "api-reference/enterprise-byoa/grafana/update",
+                  "api-reference/enterprise-byoa/grafana/delete",
+                  "api-reference/enterprise-byoa/grafana/backup",
+                  "api-reference/enterprise-byoa/grafana/copy-snapshot",
+                  "api-reference/enterprise-byoa/grafana/failover",
+                  "api-reference/enterprise-byoa/grafana/start",
+                  "api-reference/enterprise-byoa/grafana/stop",
+                  "api-reference/enterprise-byoa/grafana/restart"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Enterprise Customer Hosted",
+            "pages": [
+              {
+                "group": "Standalone",
+                "pages": [
+                  "api-reference/enterprise-customer-hosted/standalone/list",
+                  "api-reference/enterprise-customer-hosted/standalone/create",
+                  "api-reference/enterprise-customer-hosted/standalone/describe"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "dark": "/logo/dark.svg",
+    "href": "https://app.falkordb.cloud"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:contact@falkordb.com"
       }
     ],
     "primary": {
@@ -64,9 +206,15 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/falkordb",
+      "github": "https://github.com/FalkorDB",
+      "linkedin": "https://linkedin.com/company/falkordb"
     }
+  },
+  "background": {
+    "decoration": "gradient"
+  },
+  "markdown": {
+    "schema": true
   }
 }

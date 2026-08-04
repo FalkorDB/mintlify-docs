@@ -1,0 +1,173 @@
+---
+title: "Schemas"
+description: "Request and response schemas shared across the FalkorDB API."
+---
+
+This page documents the request and response schemas used across endpoints. Endpoint pages link here for full field definitions.
+
+## Common query parameter
+
+<ParamField query="subscriptionId" type="string">
+  ID of the subscription. Optional on every endpoint.
+</ParamField>
+
+## Common path parameter
+
+<ParamField path="id" type="string" required>
+  ID of the resource instance.
+</ParamField>
+
+## LISTResponseBody
+
+<ResponseField name="ids" type="string[]">
+  IDs of the resource instances.
+</ResponseField>
+
+```json
+{ "ids": ["instance-abc", "instance-def"] }
+```
+
+## CREATEResponseBody
+
+<ResponseField name="id" type="string">
+  ID of the created resource.
+</ResponseField>
+
+```json
+{ "id": "instance-abc" }
+```
+
+## DESCRIBEResponseBody
+
+Returned for Enterprise BYOA, Pro, Startup, and Free tiers.
+
+       
+
+## DESCRIBEResponseBody2
+
+Returned for Enterprise Customer Hosted endpoints. Same fields as `DESCRIBEResponseBody` plus:
+
+<ResponseField name="custom_network" type="string">
+  Custom network the resource is provisioned in.
+</ResponseField>
+
+## CREATERequestBody (Enterprise BYOA - Standalone / Cluster)
+
+ 
+
+<ParamField body="requestParams" type="object" required>
+  <Expandable title="properties">
+                      
+  </Expandable>
+</ParamField>
+
+## CREATERequestBody (Enterprise BYOA - Multi-Zone / Single-Zone)
+
+Same as CREATERequestBody (Standalone/Cluster) with the addition of:
+
+<ParamField body="requestParams.numReplicas" default={2} type="number">
+  Number of replicas.
+</ParamField>
+
+## CREATERequestBody (Enterprise BYOA - Grafana)
+
+ 
+
+<ParamField body="requestParams" type="object" required>
+  <Expandable title="properties">
+                
+  </Expandable>
+</ParamField>
+
+## CREATERequestBody (Enterprise Customer Hosted)
+
+Same as Enterprise BYOA variants except:
+
+- Adds `custom_network_id` (string) at the top level. Custom network to provision the resource in.
+- Removes `cloud_provider_account_config_id` and `cloud_provider_native_network_id` from `requestParams`.
+
+Grafana variant adds `custom_network_id` and drops the two BYOA account fields as well.
+
+## CREATERequestBody (Pro Customer Hosted)
+
+Same as Enterprise Customer Hosted CREATE except:
+
+- No `custom_network_id`.
+- No `enableEnterpriseModule` in `requestParams`.
+- No `maxMemory` in `requestParams`.
+
+## CREATERequestBody (Startup Customer Hosted - Standalone)
+
+ 
+
+<ParamField body="requestParams" type="object" required>
+  <Expandable title="properties">
+                  
+  </Expandable>
+</ParamField>
+
+## CREATERequestBody (Free Customer Hosted)
+
+ 
+
+<ParamField body="requestParams" type="object" required>
+  <Expandable title="properties">
+       
+  </Expandable>
+</ParamField>
+
+## UPDATERequestBody (Enterprise - all components except Grafana)
+
+<ParamField body="requestParams" type="object" required>
+  <Expandable title="properties">
+        
+  </Expandable>
+</ParamField>
+
+## UPDATERequestBody (Enterprise - Grafana)
+
+<ParamField body="requestParams" type="object" required>
+  <Expandable title="properties">
+              
+  </Expandable>
+</ParamField>
+
+## UPDATERequestBody (Free and Startup)
+
+<ParamField body="requestParams" type="object" required>
+  <Expandable title="properties">
+      
+  </Expandable>
+</ParamField>
+
+## UPDATERequestBody (Pro - Cluster (Multi-Zone))
+
+<ParamField body="requestParams" type="object" required>
+  <Expandable title="properties">
+      
+  </Expandable>
+</ParamField>
+
+## UPDATERequestBody (Pro - Standalone / Single-Zone / Multi-Zone)
+
+<ParamField body="requestParams" type="object" required>
+  <Expandable title="properties">
+       
+  </Expandable>
+</ParamField>
+
+## COPYSNAPSHOTRequestBody
+
+ 
+
+## COPYSNAPSHOTResponseBody
+
+## FAILOVERRequestBody
+
+ 
+
+## Error
+
+Error responses (`application/vnd.goa.error`):
+
+     

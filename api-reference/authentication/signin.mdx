@@ -1,0 +1,48 @@
+---
+title: "Sign in"
+api: "POST https://api.omnistrate.cloud/2022-09-01-00/resource-instance/user/signin"
+description: "Sign into the FalkorDB consumption service and obtain a JWT."
+---
+
+Signs the user into the consumption service. Send the request with HTTP Basic authentication (`Authorization: Basic <base64(user:password)>`). The response returns a JWT that you use as a bearer token on all other endpoints.
+
+## Authorization
+
+<ParamField header="Authorization" type="string" required>
+  Basic authentication credentials: `Basic <base64(username:password)>`.
+</ParamField>
+
+## Response
+
+<ResponseField name="token" type="string" required>
+  JWT token used to authorize subsequent requests. Send it as `Authorization: Bearer <token>`.
+</ResponseField>
+
+### 200 OK
+
+```json
+{
+  "token": "eyJhbGciOi..."
+}
+```
+
+### Errors
+
+| Status | Name | Description |
+| --- | --- | --- |
+| 400 | `bad_request` | The request is malformed. |
+| 401 | `auth_failure` | The credentials are invalid. |
+| 500 | `failed_request` | The server failed to complete the sign-in. |
+
+Error responses use the `application/vnd.goa.error` content type:
+
+```json
+{
+  "name": "bad_request",
+  "id": "123abc",
+  "message": "parameter 'p' must be an integer",
+  "temporary": true,
+  "timeout": false,
+  "fault": false
+}
+```

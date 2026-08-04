@@ -1,0 +1,32 @@
+---
+title: "List instances"
+sidebarTitle: "List"
+api: "GET https://api.omnistrate.cloud/2022-09-01-00/resource-instance/sp-JvkxkPhinN/falkordb/v1/prod/falkordb-enterprise-byoa-byoa/falkordb-enterprise-byoa-falkordb-byoa-model-omnistrate-dedicated-tenancy/standalone"
+description: "List Enterprise BYOA Standalone FalkorDB instances."
+---
+
+Lists the IDs of all Enterprise BYOA Standalone FalkorDB instances in the subscription.
+
+## Authorization
+
+<ParamField header="Authorization" type="string" required>
+  Bearer JWT obtained from [Sign in](/api-reference/authentication/signin).
+</ParamField>
+
+## Query parameters
+
+<ParamField query="subscriptionId" type="string">
+  ID of the subscription. Optional.
+</ParamField>
+
+## Response
+
+<ResponseField name="ids" type="string[]">
+  IDs of the resource instances.
+</ResponseField>
+
+```json 200 OK
+{
+  "ids": ["instance-abc123", "instance-def456"]
+}
+```
